@@ -25,7 +25,7 @@ public class Fornecedores {
 
     private int rg;
 
-    private int cpf;
+    private int cnpj;
 
     private String email;
 
