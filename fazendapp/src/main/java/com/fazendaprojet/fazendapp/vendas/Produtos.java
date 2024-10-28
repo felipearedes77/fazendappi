@@ -1,12 +1,8 @@
 package com.fazendaprojet.fazendapp.vendas;
 
 import com.fazendaprojet.fazendapp.request.TrueRequest;
-import com.fazendaprojet.fazendapp.service.Fornecedores;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Date;
-import java.util.UUID;
 
 
 @Table(name ="tb_produtos")
@@ -17,8 +13,8 @@ import java.util.UUID;
 
 public class Produtos {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String descricao;
 
@@ -26,7 +22,7 @@ public class Produtos {
 
     private Integer qtd_estoque;
 
-    private String validade;
+    private String Validade;
 
 
     @OneToOne
@@ -35,16 +31,16 @@ public class Produtos {
 
     public Produtos(TrueRequest data){
         this.descricao = data.descricao();
-        this.validade = getValidade();
+        this.Validade = getValidade();
         this.qtd_estoque = data.qtd_estoque();
         this.preco = data.preco();
     }
 
-    public UUID getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -73,11 +69,11 @@ public class Produtos {
     }
 
     public String getValidade() {
-        return validade;
+        return Validade;
     }
 
     public void setValidade(String validade) {
-        this.validade = validade;
+        this.Validade = validade;
     }
 
     public Fornecedores getFor_id() {

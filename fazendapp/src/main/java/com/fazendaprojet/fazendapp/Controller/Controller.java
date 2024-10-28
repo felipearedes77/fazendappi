@@ -5,15 +5,12 @@ import com.fazendaprojet.fazendapp.request.ProductDTO;
 import com.fazendaprojet.fazendapp.request.TrueRequest;
 import com.fazendaprojet.fazendapp.vendas.Produtos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
-
-import static org.hibernate.Hibernate.map;
 
 @RestController
 @RequestMapping("/produtos")
@@ -31,8 +28,10 @@ public class Controller {
         repository.save(produtosdata);
         return;
     }
-    @GetMapping("/{id}") //procurar por id
-    public ResponseEntity<Produtos> findById(@PathVariable UUID id){
+    @GetMapping("/{id}")
+    @Query("SELECT p.id AS id, p.descricao AS descricao, p.preco AS preco, p.qtd_Estoque AS qtd_Estoque, f.id AS for_Id "
+            + "FROM Produtos p LEFT JOIN p.fornecedor f WHERE p.id = :id")//procurar por id
+    public ResponseEntity<Produtos> findById(@PathVariable Integer id){
      return repository.findById(id)
         .map(record -> ResponseEntity.ok().body(record))
              .orElse(ResponseEntity.notFound().build());
@@ -42,8 +41,10 @@ public class Controller {
         List<ProductDTO> produtoList = repository.findAll().stream().map(ProductDTO::new).toList();
         return produtoList;
     }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<Produtos> updateProdutos(@PathVariable UUID id , @Validated @RequestBody ProductDTO data){
+    public ResponseEntity<Produtos> updateProdutos(@PathVariable Integer id ,  @RequestBody ProductDTO data){
         Optional<Produtos> existingProductOpt = repository.findById(id);
 
         if (!existingProductOpt.isPresent()) {
@@ -59,8 +60,9 @@ public class Controller {
 
         return ResponseEntity.ok(updatedProduct);
     }
+
     @PatchMapping("/{id}")
-    public ResponseEntity<Produtos> update(@PathVariable UUID id, @RequestBody ProductDTO data){
+    public ResponseEntity<Produtos> update(@PathVariable Integer id, @RequestBody ProductDTO data){
         Optional<Produtos> existingProductOpt = repository.findById(id);
 
         if (!existingProductOpt.isPresent()) {
@@ -86,5 +88,7 @@ public class Controller {
 
         Produtos updatedProduct = repository.save(existingProduct);
         return ResponseEntity.ok(updatedProduct);
-}
+
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.fazendaprojet.fazendapp.vendas;
 
-import com.fazendaprojet.fazendapp.service.Clientes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,7 @@ import java.util.UUID;
 public class Vendas {
     @Id
     @GeneratedValue
-    private UUID id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name= "fk_cliente")

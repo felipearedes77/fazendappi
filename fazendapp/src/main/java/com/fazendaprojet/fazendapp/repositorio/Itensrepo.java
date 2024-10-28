@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface Itensrepo extends JpaRepository<Itensvendas , UUID> {
+public interface Itensrepo extends JpaRepository<Itensvendas , Integer> {
 }

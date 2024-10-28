@@ -16,8 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Itensvendas {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @OneToOne
     @JoinColumn (name= "fk_vendas" , referencedColumnName = "id")

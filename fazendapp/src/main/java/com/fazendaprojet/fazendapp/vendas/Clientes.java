@@ -1,11 +1,7 @@
-package com.fazendaprojet.fazendapp.service;
+package com.fazendaprojet.fazendapp.vendas;
 
 import com.fazendaprojet.fazendapp.request.ResquestClientes;
-import com.fazendaprojet.fazendapp.request.TrueRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +18,8 @@ import java.util.UUID;
 
 public class Clientes {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String nome;
 
@@ -35,9 +31,9 @@ public class Clientes {
 
     private String telefone;
 
-    private String celular;
-
     private String cep;
+
+    private String celular;
 
     private String endereco;
 
@@ -50,13 +46,10 @@ public class Clientes {
     private String  estado;
 
     public Clientes(ResquestClientes dt){
-
             this.nome = dt.nome();
             this.email = dt.email();
             this.cep = dt.cep();
             this.endereco = dt.endereco();
-
-
 
     }
 }
